@@ -5,20 +5,35 @@ const Schema = mongoose.Schema;
 let anime = new Schema(
   {
     title: {
-      type: String
+      type: String,
     },
     averageRating: {
-      type: Number
+      type: Number,
     },
     synopsis: {
-      type: String
+      type: String,
+    },
+    numberOfEps: {
+      type: Number,
+    },
+    subtype: {
+      type: String,
+    },
+    posterImage: {
+      type: String,
     },
     watched: {
-        type: Boolean
+      type: Boolean,
     },
     watchedEps: {
-        type: Number
-    }
+      type: Number,
+    },
+    personalRating: {
+      type: Number,
+    },
+    notes: {
+      type: String,
+    },
   },
   { collection: "Anime" }
 );
