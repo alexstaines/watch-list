@@ -2,24 +2,33 @@
   "name": "watch-list",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server",
+    "server": "nodemon server"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/alexstaines/watch-list.git"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Alexander Staines",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/alexstaines/watch-list/issues"
   },
   "homepage": "https://github.com/alexstaines/watch-list#readme",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "config": "^3.3.7",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
+    "express-validator": "^6.14.2",
+    "jsonwebtoken": "^8.5.1",
     "mongodb": "^4.7.0",
     "mongoose": "^6.4.4"
+  },
+  "devDependencies": {
+    "concurrently": "^7.2.2",
+    "nodemon": "^2.0.19"
   }
 }
