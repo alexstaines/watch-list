@@ -137,7 +137,7 @@ router.get("/", async (req, res) => {
           as: "user",
         },
       },
-      { $match: { "user.visibility": true } },
+      { $match: { "user.visibility": false } },
       { $project: { "user.password": 0 } },
     ]);
 
