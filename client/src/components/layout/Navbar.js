@@ -6,36 +6,50 @@ import { logout } from "../../actions/auth";
 
 const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
   const authLinks = (
-    <ul>
-      <li>
-        <a onClick={logout} href="#!">
+    <>
+      <li className="nav-item">
+        <Link to="/list" className="nav-link">
+          My List
+        </Link>
+      </li>
+      <li className="nav-item">
+        <a onClick={logout} href="#!" className="nav-link">
           <i className="fas fa-sign-out-alt"></i> Logout
         </a>
       </li>
-      <li>
-        <Link to="/list">My List</Link>
-      </li>
-    </ul>
+    </>
   );
 
   const guestLinks = (
-    <ul>
-      <li>
-        <Link to="/register">Register</Link>
+    <>
+      <li className="nav-item">
+        <Link to="/register" className="nav-link">
+          Register
+        </Link>
       </li>
-      <li>
-        <Link to="/login">Login</Link>
+      <li className="nav-item">
+        <Link to="/login" className="nav-link">
+          Login
+        </Link>
       </li>
-    </ul>
+    </>
   );
 
   return (
-      <nav>
-        <h1>
-          <Link to="/">All Lists</Link>
-        </h1>
-        { !loading && (<Fragment>{isAuthenticated ? authLinks : guestLinks}</Fragment>)}
-      </nav>
+    <nav className="navbar navbar-expand bg-light">
+      <div className="container-fluid">
+        <ul className="navbar-nav">
+          <li className="nav-item">
+            <Link to="/" className="navbar-brand">
+              All Lists
+            </Link>
+          </li>
+        </ul>
+        <ul className="navbar-nav d-flex">
+          {!loading && <Fragment>{isAuthenticated ? authLinks : guestLinks}</Fragment>}
+        </ul>
+      </div>
+    </nav>
   );
 };
 
