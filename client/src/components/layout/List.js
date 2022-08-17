@@ -6,7 +6,7 @@ import { getMyList } from "../../actions/list";
 const List = ({ getMyList, auth, list }) => {
   useEffect(() => {
     getMyList();
-  }, []);
+  }, [getMyList]);
 
   return (
     <div>

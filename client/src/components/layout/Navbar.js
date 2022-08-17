@@ -36,7 +36,7 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
   );
 
   return (
-    <nav className="navbar navbar-expand bg-light">
+    <nav className="navbar navbar-expand shadow-sm">
       <div className="container-fluid">
         <ul className="navbar-nav">
           <li className="nav-item">
