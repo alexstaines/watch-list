@@ -2,11 +2,11 @@ import React, {useEffect} from "react";
 import { PropTypes } from "prop-types";
 import { Navigate } from "react-router-dom";
 import { connect } from "react-redux";
-import { getLists } from "../../actions/list";
+import { getUsers } from "../../actions/list";
 
-const Landing = ({ getLists, auth, list }) => {
+const Landing = ({ getUsers, auth, list }) => {
   useEffect(() => {
-    getLists();
+    getUsers();
   }, []);
 
   return (
@@ -19,7 +19,7 @@ const Landing = ({ getLists, auth, list }) => {
 };
 
 Landing.propTypes = {
-  getLists: PropTypes.func.isRequired,
+  getUsers: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   list: PropTypes.object.isRequired,
 };
@@ -29,4 +29,4 @@ const mapStateToProps = (state) => ({
   list: state.list,
 });
 
-export default connect(mapStateToProps, { getLists })(Landing);
+export default connect(mapStateToProps, { getUsers })(Landing);

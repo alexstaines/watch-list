@@ -10,6 +10,8 @@ import {
   GET_MY_LIST,
   GET_ALL_LISTS,
   GET_ALL_LISTS_ERROR,
+  GET_ALL_USERS,
+  GET_ALL_USERS_ERROR
 } from "./types";
 
 // get my list
@@ -51,6 +53,28 @@ export const getLists = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: GET_ALL_LISTS_ERROR,
+      payload: { msg: error.response.statusText, status: error.response.status },
+    });
+  }
+};
+
+// get all users with visible lists
+export const getUsers = () => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  try {
+    const res = await axios.get("/api/users", config);
+
+    dispatch({
+      type: GET_ALL_USERS,
+      payload: res.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_ALL_USERS_ERROR,
       payload: { msg: error.response.statusText, status: error.response.status },
     });
   }
