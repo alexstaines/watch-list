@@ -62,4 +62,18 @@ router.post(
   }
 );
 
+// @route GET API/Users
+// @desc All users with visibile lists
+// @access Public
+router.get("/", async (req, res) => {
+  try {
+    //leave off password in data
+    const user = await User.find({visibility: true}).select("-password");
+    res.json(user);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
 module.exports = router;
