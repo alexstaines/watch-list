@@ -11,11 +11,15 @@ export const LOGOUT = 'LOGOUT';
 export const GET_LIST = 'GET_LIST';
 export const GET_ALL_LISTS = 'GET_ALL_LISTS';
 export const GET_MY_LIST = 'GET_MY_LIST';
+export const GET_ALL_USERS = 'GET_ALL_USERS';
+export const GET_ALL_USERS_ERROR = 'GET_ALL_USERS_ERROR';
+export const GET_ALL_LISTS_ERROR = "GET_ALL_LISTS_ERROR"
+
+export const TOGGLE_VISIBILITY = 'TOGGLE_VISIBILITY';
+export const TOGGLE_VISIBILITY_ERROR = 'TOGGLE_VISIBILITY_ERROR';
 
 export const ADD_LIST_ITEM = 'ADD_LIST_ITEM';
 export const REMOVE_LIST_ITEM = 'REMOVE_LIST_ITEM';
 export const UPDATE_LIST_ITEM = 'UPDATE_LIST_ITEM';
 export const LIST_ERROR = 'LIST_ERROR';
 export const MY_LIST_ERROR = 'MY_LIST_ERROR';
-
-export const GET_ALL_LISTS_ERROR = "GET_ALL_LISTS_ERROR"
