@@ -25,9 +25,16 @@ const ListSchema = mongoose.Schema({
     type: String,
   },
   watched: {
-    type: Boolean,
+    type: String,
     required: true,
-    default: false,
+    enum: ['Not Started', 'Started', 'Complete'],
+    default: 'Not Started',
+  },
+  dateStarted: {
+    type: Date,
+  },
+  dateFinished: {
+    type: Date,
   },
   watchedEps: {
     type: Number,

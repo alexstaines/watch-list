@@ -6,6 +6,10 @@ import {
   LOGIN_FAIL,
   LOGIN_SUCCESS,
   LOGOUT,
+  GET_ALL_USERS,
+  GET_ALL_USERS_ERROR,
+  TOGGLE_VISIBILITY,
+  TOGGLE_VISIBILITY_ERROR,
 } from "../actions/types";
 
 const initialState = {
@@ -13,6 +17,7 @@ const initialState = {
   isAuthenticated: null,
   loading: true,
   user: null,
+  users: [],
 };
 
 export default function (state = initialState, action) {
@@ -46,6 +51,26 @@ export default function (state = initialState, action) {
         isAuthenticated: false,
         loading: false,
       };
+      case TOGGLE_VISIBILITY:
+        return {
+          isAuthenticated: true,
+          loading: false,
+          user: payload,
+          users: [],
+        }
+      case GET_ALL_USERS:
+        return {
+          ...state,
+          loading: false,
+          users: payload,
+        };
+      case TOGGLE_VISIBILITY_ERROR:
+      case GET_ALL_USERS_ERROR:
+        return {
+          ...state,
+          loading: false,
+          error: payload,
+        };
     default:
       return state;
   }

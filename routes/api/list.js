@@ -28,6 +28,7 @@ router.get("/me", auth, async (req, res) => {
 // @desc create user list item
 // @access Private
 router.post("/", [[auth, check("title", "Title must be provided").not().isEmpty()]], async (req, res) => {
+  console.log(res.body);
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
@@ -41,9 +42,12 @@ router.post("/", [[auth, check("title", "Title must be provided").not().isEmpty(
     subtype,
     posterImage,
     watched,
+    dateStarted,
+    dateFinished,
     watchedEps,
     personalRating,
     notes,
+    position,
   } = req.body;
 
   // Build list object
@@ -56,9 +60,14 @@ router.post("/", [[auth, check("title", "Title must be provided").not().isEmpty(
   if (subtype) listFields.subtype = subtype;
   if (posterImage) listFields.posterImage = posterImage;
   if (watched) listFields.watched = watched;
+  if (dateStarted) listFields.dateStarted = dateStarted;
+  if (dateFinished) listFields.dateFinished = dateFinished;
   if (watchedEps) listFields.watchedEps = watchedEps;
   if (personalRating) listFields.personalRating = personalRating;
   if (notes) listFields.notes = notes;
+  listFields.dateAdded = Date.now();
+  listFields.modified = Date.now();
+  if (position) listFields.position = position;
 
   try {
     //create
@@ -77,7 +86,7 @@ router.post("/", [[auth, check("title", "Title must be provided").not().isEmpty(
 // @route Post API/list/id
 // @desc update user list item
 // @access Private
-router.get("/edit/:id", [[auth, check("title", "Title must be provided").not().isEmpty()]], async (req, res) => {
+router.post("/edit/:id", [[auth, check("title", "Title must be provided").not().isEmpty()]], async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
@@ -91,11 +100,14 @@ router.get("/edit/:id", [[auth, check("title", "Title must be provided").not().i
     subtype,
     posterImage,
     watched,
+    dateStarted,
+    dateFinished,
     watchedEps,
     personalRating,
     notes,
+    position,
   } = req.body;
-
+  console.log(req.body);
   // Build list object
   const listFields = {};
   listFields.user = req.user.id;
@@ -106,13 +118,16 @@ router.get("/edit/:id", [[auth, check("title", "Title must be provided").not().i
   if (subtype) listFields.subtype = subtype;
   if (posterImage) listFields.posterImage = posterImage;
   if (watched) listFields.watched = watched;
+  if (dateStarted) listFields.dateStarted = dateStarted;
+  if (dateFinished) listFields.dateFinished = dateFinished;
   if (watchedEps) listFields.watchedEps = watchedEps;
   if (personalRating) listFields.personalRating = personalRating;
   if (notes) listFields.notes = notes;
   listFields.modified = Date.now();
+  if (position) listFields.position = position;
 
   try {
-    let list = await List.findOneAndUpdate({ user: req.user.id }, { $set: listFields }, { new: true });
+    let list = await List.findOneAndUpdate({ _id: req.params.id, user: req.user.id }, { $set: listFields }, { new: true });
 
     return res.json(list);
   } catch (err) {

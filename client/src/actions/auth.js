@@ -1,6 +1,6 @@
 import axios from "axios";
 import { setAlert } from "./alert";
-import { REGISTER_SUCCESS, REGISTER_FAIL, USER_LOADED, AUTH_ERROR, LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT } from "./types";
+import { REGISTER_SUCCESS, REGISTER_FAIL, USER_LOADED, AUTH_ERROR, LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT, TOGGLE_VISIBILITY, TOGGLE_VISIBILITY_ERROR } from "./types";
 
 import setAuthToken from "../utils/setAuthToken";
 
@@ -92,4 +92,25 @@ export const login =
 // logout
 export const logout = () => (dispatch) => {
   dispatch({ type: LOGOUT });
+};
+
+// toggle visibility
+export const toggleVisibility = () => async (dispatch) => {
+  if (localStorage.token) {
+    setAuthToken(localStorage.token);
+  }
+
+  try {
+    const res = await axios.post("api/auth/toggle-visibility");
+    dispatch({
+      type: TOGGLE_VISIBILITY,
+      payload: res.data,
+    });
+    
+  } catch (error) {
+    dispatch({
+      type: TOGGLE_VISIBILITY_ERROR,
+    });
+  }
+
 };

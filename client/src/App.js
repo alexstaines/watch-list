@@ -4,7 +4,7 @@ import Navbar from "./components/layout/Navbar";
 import Landing from "./components/layout/Landing";
 import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
-import List from "./components/layout/List";
+import List from "./components/my-list/List";
 import Alert from "./components/layout/Alert";
 import PrivateRoute from "./components/routing/PrivateRoute";
 // Redux
