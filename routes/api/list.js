@@ -86,7 +86,7 @@ router.post("/", [[auth, check("title", "Title must be provided").not().isEmpty(
 // @route Post API/list/id
 // @desc update user list item
 // @access Private
-router.post("/edit/:id", [[auth, check("title", "Title must be provided").not().isEmpty()]], async (req, res) => {
+router.post("/edit/:id", [[auth]], async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
@@ -107,7 +107,7 @@ router.post("/edit/:id", [[auth, check("title", "Title must be provided").not().
     notes,
     position,
   } = req.body;
-  console.log(req.body);
+  
   // Build list object
   const listFields = {};
   listFields.user = req.user.id;

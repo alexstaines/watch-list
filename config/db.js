@@ -1,12 +1,11 @@
 const mongoose = require("mongoose");
-const config = require('config');
-const url = config.get('MONGO_URI');
+require('dotenv').config();
 
 //const url = process.env.MONGO_URI;
 
 const connectDB = async () => {
     try {
-        await mongoose.connect(url);
+        await mongoose.connect(process.env.DB);
         console.log('MongoDB Connected');
     } catch(err) {
         console.error(err.message);
@@ -16,16 +15,3 @@ const connectDB = async () => {
 }
 
 module.exports = connectDB;
-
-// const connectionParams = {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true,
-// };
-// mongoose
-//   .connect(url, connectionParams)
-//   .then(() => {
-//     console.log("Connected to the database ");
-//   })
-//   .catch((err) => {
-//     console.error(`Error connecting to the database. n${err}`);
-//   });
