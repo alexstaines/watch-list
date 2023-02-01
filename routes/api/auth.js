@@ -3,7 +3,7 @@ const router = express.Router();
 const bcrypt = require("bcryptjs");
 const auth = require("../../middleware/auth");
 const jwt = require("jsonwebtoken");
-const config = require("config");
+require('dotenv').config();
 const { check, validationResult } = require("express-validator");
 
 const User = require("../../models/user");
@@ -37,7 +37,6 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    console.log(req.body);
     const { username, password } = req.body;
 
     try {
@@ -60,10 +59,9 @@ router.post(
           id: user.id,
         },
       };
-      jwt.sign(payload, config.get("jwtToken"), { expiresIn: 360000 }, (err, token) => {
+      jwt.sign(payload, process.env.JWT, { expiresIn: 360000 }, (err, token) => {
         if (err) throw err;
         res.json({ token });
-        console.log(token);
       });
     } catch (err) {
       console.error(err.message);
