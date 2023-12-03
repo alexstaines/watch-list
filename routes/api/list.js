@@ -4,8 +4,6 @@ const auth = require("../../middleware/auth");
 const { check, validationResult } = require("express-validator");
 
 const List = require("../../models/list");
-const User = require("../../models/user");
-const { default: mongoose } = require("mongoose");
 
 // @route Get API/list/me
 // @desc get current users list
@@ -18,7 +16,7 @@ router.get("/me", auth, async (req, res) => {
       return res.status(400).json({ msg: "No list by this user" });
     }
     res.json(lists);
-  } catch (err) {
+  } catch (error) {
     console.error(error.message);
     res.status(500).send("Server Error");
   }
@@ -28,7 +26,6 @@ router.get("/me", auth, async (req, res) => {
 // @desc create user list item
 // @access Private
 router.post("/", [[auth, check("title", "Title must be provided").not().isEmpty()]], async (req, res) => {
-  console.log(res.body);
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
@@ -77,8 +74,8 @@ router.post("/", [[auth, check("title", "Title must be provided").not().isEmpty(
     await list.save();
 
     return res.json(list);
-  } catch (err) {
-    console.error(err.message);
+  } catch (error) {
+    console.error(error.message);
     res.status(500).send("Server Error");
   }
 });
@@ -130,8 +127,8 @@ router.post("/edit/:id", [[auth]], async (req, res) => {
     let list = await List.findOneAndUpdate({ _id: req.params.id, user: req.user.id }, { $set: listFields }, { new: true });
 
     return res.json(list);
-  } catch (err) {
-    console.error(err.message);
+  } catch (error) {
+    console.error(error.message);
     res.status(500).send("Server Error");
   }
 });
@@ -141,8 +138,6 @@ router.post("/edit/:id", [[auth]], async (req, res) => {
 // @access Public
 router.get("/", async (req, res) => {
   try {
-    //const lists = await List.find({ visibility: true }).populate("user", { password: 0 });
-
     const lists = await List.aggregate([
       {
         $lookup: {
@@ -165,6 +160,22 @@ router.get("/", async (req, res) => {
   }
 });
 
+// // @route Get API/list/view-item/id
+// // @desc get single list entry
+// // @access Private
+// router.get("/view-item/:id", auth, async (req, res) => {
+//   try {
+//     const list_item = await List.find({ _id: req.params.id }).populate("user", { password: 0 });
+
+//     if (!list_item || list_item.length === 0) return res.status(400).json({ msg: "No list item to display." });
+
+//     res.json(list_item);
+//   } catch (error) {
+//     console.error(error.message);
+//     res.status(500).send("Server Error");
+//   }
+// });
+
 // @route Get API/list/user/user_id
 // @desc get list by user_id
 // @access Public
@@ -176,7 +187,7 @@ router.get("/user/:user_id", async (req, res) => {
     // });
 
     const list = await List.aggregate([
-      { $match: { user: mongoose.Types.ObjectId(req.params.user_id) } },
+      { $match: { _id: req.params.id } },
       {
         $lookup: {
           from: "users",
@@ -185,7 +196,7 @@ router.get("/user/:user_id", async (req, res) => {
           as: "user",
         },
       },
-      { $match: { "user.visibility": false } },
+      { $match: { "user.visibility": true } },
       { $project: { "user.password": 0 } },
     ]);
 
